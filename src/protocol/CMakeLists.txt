@@ -2,6 +2,18 @@
 
 add_library(noiseprotocol STATIC)
 
+# BEGIN PATCH: Force generic reference implementation for ED448 on Apple platforms to avoid unsupported inline asm with AppleClang
+if(APPLE)
+    # Use portable 64-bit reference implementation instead of inline asm optimized one
+    set(ED448_ARCH arch_ref64)
+else()
+    # Default to optimized x86_64 implementation when not explicitly defined
+    if(NOT DEFINED ED448_ARCH)
+        set(ED448_ARCH arch_x86_64)
+    endif()
+endif()
+# END PATCH
+
 # Include directories
 set(GOLDILOCKS_SRCDIR ${PROJECT_SOURCE_DIR}/src/crypto/goldilocks/src)
 
