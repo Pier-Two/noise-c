@@ -2,7 +2,7 @@
 
 //See paper for details on the error reconciliation
 
-static int32_t abs(int32_t v)
+static int32_t newhope_abs32(int32_t v)
 {
   int32_t mask = v >> 31;
   return (v ^ mask) - mask;
@@ -29,7 +29,7 @@ static int32_t f(int32_t *v0, int32_t *v1, uint32_t x)
   r = t & 1;
   *v1 = (t>>1)+r;
 
-  return abs(x-((*v0)*2*PARAM_Q));
+  return newhope_abs32(x-((*v0)*2*PARAM_Q));
 }
 
 static int32_t g(int32_t x)
@@ -49,7 +49,7 @@ static int32_t g(int32_t x)
 
   t *= 8*PARAM_Q;
 
-  return abs(t - x);
+  return newhope_abs32(t - x);
 }
 
 
